@@ -6,24 +6,40 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/02 18:41:29 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/03 17:25:21 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "libft.h"
+#include <errno.h>
+#include <fcntl.h>
+#include <string.h>
+#include <stdio.h>
 
 int	main(int ac, char **av, char **env)
 {
-	char	**path;
+	int		fd[2];
+	int		pid;
+	t_data	data;
 
-	(void) av;
 	if (ac != 5)
-		return (ft_printf("Error\nExpected 4 arguments"), 1);
-	path = ft_path(env);
-	int	i = 0;
-	if (!path)
-		return (ft_printf("Error\nNo valid path found"), 2);
-	char **cmd = ft_split(av[1], ' ');
-	ft_exec(path, cmd[0], cmd, env);
+	 	return (ft_printf("Error\nExpected 4 arguments"), 1);
+	ft_memset(&data, 0, sizeof(t_data));
+	init_data(&data, ac, av, env);
+	if (pipe(fd) == -1)
+	{
+		perror("Error ");
+		return (errno);
+	}
+	pid = fork();
+	if (pid == 0)
+	{
+		ft_child(&data, fd[0], fd[1]);
+	}
+	else
+	{
+		ft_parent(&data, fd[0], fd[1]);
+	}
+	return (0);
 }

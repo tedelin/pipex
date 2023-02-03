@@ -6,7 +6,7 @@
 #    By: tedelin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 10:52:51 by tedelin           #+#    #+#              #
-#    Updated: 2023/02/01 16:15:17 by tedelin          ###   ########.fr        #
+#    Updated: 2023/02/03 13:55:35 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = pipex
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDE = -I./include -I./libft
-SRC = $(addprefix src/, test.c)
-OBJ = $(addprefix obj/, test.o)
+SRC = $(addprefix src/, pipex.c main.c)
+OBJ = $(addprefix obj/, pipex.o main.o)
 LIBFT_LIB = libft/libft.a
 LIBFT_PATH = libft
 

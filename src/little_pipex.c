@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 16:21:46 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/02 18:42:52 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/03 16:03:22 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	main(int ac, char **av, char **env)
 	p1 = fork();
 	if (p1 == 0)// cmd2 wc
 	{
-		int outfile = open(av[4], O_WRONLY | O_CREAT);
+		int out = open(av[4], O_WRONLY | O_CREAT);
 		dup2(fd[0], STDIN_FILENO); // connect read side with stdin
-		dup2(outfile, STDOUT_FILENO); // connect write side with file
+		dup2(out, STDOUT_FILENO); // connect write side with file
 		close(fd[0]);
 		close(fd[1]);
 		char **args = ft_split(av[3], ' ');
@@ -36,9 +36,9 @@ int	main(int ac, char **av, char **env)
 	}
 	else // cmd1 grep
 	{
-		int	infile = open(av[1], O_RDONLY);
+		int	in = open(av[1], O_RDONLY);
 		dup2(fd[1], STDOUT_FILENO); // connect write side to stdout
-		dup2(infile, STDIN_FILENO); // connect read side with stdin
+		dup2(in, STDIN_FILENO); // connect read side with stdin
 		close(fd[0]);
 		close(fd[1]);
 		char **args2 = ft_split(av[2], ' ');
