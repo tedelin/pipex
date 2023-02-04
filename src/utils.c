@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/04 13:58:20 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/04 17:20:06 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-int	ft_exec(t_data *data, int nb) // add number in args to do bonus or in struct to share accross program
+int	ft_exec(t_data *data, int nb)
 {
 	int		i;
 	char	*cmd;
@@ -38,8 +38,8 @@ int	ft_exec(t_data *data, int nb) // add number in args to do bonus or in struct
 		if (access(path_cmd, X_OK) == 0)
 		{
 			if (execve(path_cmd, args, data->env) == -1)
-				return (free(path_cmd), 1);
-			return (free(path_cmd), 0);
+				return (free(path_cmd), free_split(args), 1);
+			return (free(path_cmd), free_split(args), 0);
 		}
         free(path_cmd);
 	}
@@ -76,7 +76,7 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 	data->av = av;
 	data->in = open(av[1], O_RDONLY);
 	data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0777);
-	if (data->in == - 1 || data->out == -1)
+	if (data->out == -1) // data->in == - 1 || 
 		perror("File Error ");
 }
 
@@ -85,7 +85,7 @@ void	free_split(char	**tab)
 	int	i;
 
 	i = 0;
-	while (tab[i])
+	while (tab && tab[i])
 		free(tab[i++]);
 	free(tab);
 }

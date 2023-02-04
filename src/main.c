@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/04 13:58:26 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/04 18:49:59 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int	main(int ac, char **av, char **env)
 	{
 		ft_process(&data, fd[0], fd[1], pid);
 	}
+	ft_close(&data, fd[0], fd[1]);
 	return (0);
 }
