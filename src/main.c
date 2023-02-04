@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/03 17:25:21 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/04 13:58:26 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	main(int ac, char **av, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		ft_child(&data, fd[0], fd[1]);
+		ft_process(&data, fd[0], fd[1], pid);
 	}
 	else
 	{
-		ft_parent(&data, fd[0], fd[1]);
+		ft_process(&data, fd[0], fd[1], pid);
 	}
 	return (0);
 }
