@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:11:52 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 16:50:49 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 16:41:53 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 # include "libft.h"
 # include <unistd.h>
 # include <fcntl.h>
@@ -33,13 +33,12 @@ typedef struct s_data
 	char	**av;
 }		t_data;
 
-void 	ft_first(t_data *data);
-void 	ft_last(t_data *data);
-
 int		ft_exec(t_data *data, int nb);
 char	**ft_path(char **env);
 void	init_data(t_data *data, int ac, char **av, char **env);
 void	free_split(char **tab);
-void	ft_exit(void);
+
+void	ft_pipe(t_data *data, int read, int write);
+void	ft_cmd(t_data *data, t_list **lst_pid);
 
 #endif

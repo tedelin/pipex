@@ -6,29 +6,25 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 12:11:28 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 16:53:49 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "pipex.h"
-#include <fcntl.h>
-#include <errno.h>
-#include <stdio.h>
 
 int	ft_exec(t_data *data, int nb)
 {
 	int		i;
 	char	*cmd;
-    char	*path_cmd;
-    char	**args;
+	char	*path_cmd;
+	char	**args;
 
 	i = -1;
-    args = ft_split(data->av[nb], ' ');
-    if (args == NULL)
+	args = ft_split(data->av[nb], ' ');
+	if (args == NULL)
 		return (free_split(args), 1);
 	cmd = ft_strjoin("/", args[0]);
-    if (cmd == NULL)
+	if (cmd == NULL)
 		return (free_split(args), 1);
 	while (data->path[++i])
 	{
@@ -41,7 +37,7 @@ int	ft_exec(t_data *data, int nb)
 				return (free(path_cmd), free_split(args), 1);
 			return (free(path_cmd), free_split(args), 0);
 		}
-        free(path_cmd);
+		free(path_cmd);
 	}
 	return (1);
 }
@@ -77,7 +73,7 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 	data->cmd = 1;
 	data->in = open(av[1], O_RDONLY);
 	data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0777);
-	if (data->out == -1) // data->in == - 1 || 
+	if (data->out == -1)
 		perror("File Error ");
 }
 
@@ -89,4 +85,10 @@ void	free_split(char	**tab)
 	while (tab && tab[i])
 		free(tab[i++]);
 	free(tab);
+}
+
+void	ft_exit(void)
+{
+	perror("Error ");
+	exit(errno);
 }

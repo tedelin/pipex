@@ -6,11 +6,11 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 13:53:44 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 16:43:09 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
 
 int	ft_exec(t_data *data, int nb)
 {
@@ -67,9 +67,13 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 {
 	data->path = ft_path(env);
 	if (!data->path)
-		exit(errno);
+	{
+		ft_putendl_fd("Error while trying to find path", 2);
+		exit(1);
+	}
 	data->env = env;
 	data->av = av;
+	data->ac = ac;
 	data->cmd = 1;
 	data->in = open(av[1], O_RDONLY);
 	data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0777);
