@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 16:43:09 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 17:01:25 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,10 @@ void	free_split(char	**tab)
 	while (tab && tab[i])
 		free(tab[i++]);
 	free(tab);
+}
+
+void	ft_exit(void)
+{
+	perror("Error ");
+	exit(errno);
 }

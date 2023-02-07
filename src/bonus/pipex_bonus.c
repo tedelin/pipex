@@ -6,17 +6,11 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 16:43:05 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 17:01:20 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	ft_exit(void)
-{
-	perror("Error ");
-	exit(errno);
-}
 
 void	ft_cmd(t_data *data, t_list **lst_pid)
 {
@@ -34,7 +28,7 @@ void	ft_cmd(t_data *data, t_list **lst_pid)
 		ft_pipe(data, fd[0], fd[1]);
 		if (ft_exec(data, data->cmd))
 		{
-			perror("execve ");
+			perror("execve command not found ");
 			exit(errno);
 		}
 	}

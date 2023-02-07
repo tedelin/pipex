@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:11:52 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 16:50:49 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 17:04:08 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@
 
 typedef struct s_data
 {
-	int	in;
-	int	out;
-	int	cmd;
-	int	ac;
+	int		in;
+	int		out;
+	int		cmd;
+	int		ac;
 	pid_t	pid;
 	char	**env;
 	char	**path;
 	char	**av;
 }		t_data;
 
-void 	ft_first(t_data *data);
-void 	ft_last(t_data *data);
+void	ft_first(t_data *data);
+void	ft_last(t_data *data);
 
 int		ft_exec(t_data *data, int nb);
 char	**ft_path(char **env);
