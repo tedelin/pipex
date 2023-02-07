@@ -1,46 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/04 18:49:59 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/07 13:52:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-#include "libft.h"
-#include <errno.h>
-#include <fcntl.h>
-#include <string.h>
-#include <stdio.h>
 
 int	main(int ac, char **av, char **env)
 {
-	int		fd[2];
-	int		pid;
 	t_data	data;
+	t_list	*pid;
+	t_list	*tmp;
 
-	if (ac != 5)
-	 	return (ft_printf("Error\nExpected 4 arguments"), 1);
+	if (ac < 5)
+		return (ft_printf("Error\nExpected at least 4 arguments"), 1);
 	ft_memset(&data, 0, sizeof(t_data));
 	init_data(&data, ac, av, env);
-	if (pipe(fd) == -1)
+	ft_first(&data, &pid);
+	while (data.cmd < ac - 3)
+		ft_middle(&data);
+	ft_last(&data, &pid);
+	while (pid)
 	{
-		perror("Error ");
-		return (errno);
+		tmp = pid;
+		waitpid(pid->content, 0, NULL);
+		pid = pid->next;
+		free(tmp);
 	}
-	pid = fork();
-	if (pid == 0)
-	{
-		ft_process(&data, fd[0], fd[1], pid);
-	}
-	else
-	{
-		ft_process(&data, fd[0], fd[1], pid);
-	}
-	ft_close(&data, fd[0], fd[1]);
 	return (0);
 }
