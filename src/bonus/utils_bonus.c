@@ -6,13 +6,13 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 17:01:25 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/08 00:32:57 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	ft_exec(t_data *data, int nb)
+int	ft_exec(t_data *data)
 {
 	int		i;
 	char	*cmd;
@@ -20,7 +20,7 @@ int	ft_exec(t_data *data, int nb)
 	char	**args;
 
 	i = -1;
-	args = ft_split(data->av[nb], ' ');
+	args = ft_split(data->av[data->cmd], ' ');
 	if (args == NULL)
 		return (free_split(args), 1);
 	cmd = ft_strjoin("/", args[0]);
@@ -39,28 +39,24 @@ int	ft_exec(t_data *data, int nb)
 		}
 		free(path_cmd);
 	}
-	return (1);
+	return (free_split(args), 1);
 }
 
 char	**ft_path(char **env)
 {
-	char	*path;
 	int		i;
 
 	if (!*env || !env)
 		return (NULL);
-	i = 0;
-	while (env[i])
+	i = -1;
+	while (env[++i])
 	{
 		if (ft_strncmp("PATH=", env[i], 5) == 0)
 		{
-			path = env[i];
-			path += 5;
-			break ;
+			return (ft_split(env[i] + 5, ':'));
 		}
-		i++;
 	}
-	return (ft_split(path, ':'));
+	return (NULL);
 }
 
 void	init_data(t_data *data, int ac, char **av, char **env)

@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/07 17:01:20 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/08 00:37:01 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_cmd(t_data *data, t_list **lst_pid)
 	if (data->pid == 0)
 	{
 		ft_pipe(data, fd[0], fd[1]);
-		if (ft_exec(data, data->cmd))
+		if (ft_exec(data))
 		{
 			perror("execve command not found ");
 			exit(errno);
@@ -41,13 +41,13 @@ void	ft_cmd(t_data *data, t_list **lst_pid)
 	}
 }
 
-void	ft_pipe(t_data *data, int read, int write)
+void	ft_pipe(t_data *data, int rd, int wr)
 {
 	if (data->cmd == 2)
 	{
 		if (data->in == -1)
 			ft_exit();
-		if (dup2(data->in, STDIN_FILENO) == -1 || dup2(write, STDOUT_FILENO) == -1)
+		if (dup2(data->in, STDIN_FILENO) == -1 || dup2(wr, STDOUT_FILENO) == -1)
 			ft_exit();
 	}
 	else if (data->cmd == data->ac - 2)
@@ -57,9 +57,9 @@ void	ft_pipe(t_data *data, int read, int write)
 	}
 	else
 	{
-		if (dup2(write, STDOUT_FILENO) == -1)
+		if (dup2(wr, STDOUT_FILENO) == -1)
 			ft_exit();
 	}
-	close(read);
-	close(write);
+	close(rd);
+	close(wr);
 }
