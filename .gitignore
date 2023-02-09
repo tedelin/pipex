@@ -1,5 +1,7 @@
 .vscode/
 old/
+Makefile_malloc
+ft_mallocator/
 hihi/
 utils/
 in.txt
