@@ -1,42 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   lst_pid.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/09 17:33:58 by tedelin          ###   ########.fr       */
+/*   Created: 2023/02/09 17:12:25 by tedelin           #+#    #+#             */
+/*   Updated: 2023/02/09 17:14:32 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-int	main(int ac, char **av, char **env)
+t_pid	*pid_lstnew(pid_t content)
 {
-	t_data	data;
-	t_pid	*pid;
 	t_pid	*tmp;
 
-	init_data(&data, ac, av, env);
-	pid = NULL;
-	while (++data.nb_cmd <= ac - 2)
+	tmp = malloc(sizeof(t_pid));
+	if (tmp)
 	{
-		ft_process(&data, &pid);
-		ft_clear(&data);
+		tmp->content = content;
+		tmp->next = NULL;
 	}
-	while (pid)
-	{
-		tmp = pid;
-		waitpid(pid->content, &data.status, 0);
-		pid = pid->next;
-		free(tmp);
-	}
-	close(data.in);
-	close(data.out);
-	free_split(data.path);
-	if (WIFEXITED(data.status))
-		exit(WEXITSTATUS(data.status));
+	return (tmp);
+}
+
+t_pid	*pid_lstlast(t_pid *lst)
+{
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+void	pid_lstadd_back(t_pid **lst, t_pid *new)
+{
+	t_pid	*last;
+
+	if (!*lst)
+		*lst = new;
 	else
-		exit(0);
+	{
+		last = pid_lstlast(*lst);
+		last->next = new;
+	}
 }

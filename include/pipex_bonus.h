@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:11:52 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/08 19:47:01 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/09 17:29:18 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_data
 	int		out;
 	int		nb_cmd;
 	int		ac;
+	int		status;
 	pid_t	pid;
 	char	*cmd_path;
 	char	*cmd;
@@ -36,15 +37,27 @@ typedef struct s_data
 	char	**av;
 }		t_data;
 
-void	ft_exec(t_data *data);
+typedef struct s_pid
+{
+	pid_t			content;
+	struct s_pid	*next;
+}	t_pid;
+
+// Pipex bonus
+void	ft_process(t_data *data, t_pid **lst_pid);
+void	ft_child(t_data *data, int rd, int wr);
+void	ft_access(t_data *data);
 char	**ft_path(char **env);
+
+// Utils
 void	init_data(t_data *data, int ac, char **av, char **env);
 void	free_split(char **tab);
 void	ft_exit(void);
-
-void	ft_pipe(t_data *data, int rd, int wr);
-void	ft_cmd(t_data *data, t_list **lst_pid);
-void	ft_access(t_data *data);
 void	ft_clear(t_data *data);
+
+// Lstcustom
+t_pid	*pid_lstnew(pid_t content);
+t_pid	*pid_lstlast(t_pid *lst);
+void	pid_lstadd_back(t_pid **lst, t_pid *new);
 
 #endif
