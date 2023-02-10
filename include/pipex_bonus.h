@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:11:52 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 11:14:56 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/10 19:42:52 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@
 
 typedef struct s_data
 {
+	int		fd[2];
 	int		in;
 	int		out;
 	int		nb_cmd;
 	int		ac;
 	int		status;
+	int		here_doc;
 	pid_t	pid;
 	char	*cmd_path;
 	char	*cmd;
@@ -45,13 +47,14 @@ typedef struct s_pid
 
 // Pipex bonus
 void	ft_process(t_data *data, t_pid **lst_pid);
-void	ft_child(t_data *data, t_pid **lst_pid, int rd, int wr);
+void	ft_child(t_data *data, t_pid **lst_pid);
 void	ft_access(t_data *data);
 char	**ft_path(char **env);
 
 // Utils
 void	init_data(t_data *data, int ac, char **av, char **env);
 void	free_split(char **tab);
+void	ft_heredoc(t_data *data, int ac, char **av);
 void	ft_exit(t_data *data, t_pid **lst_pid, char *msg);
 
 // Lstcustom
