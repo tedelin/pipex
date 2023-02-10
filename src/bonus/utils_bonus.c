@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 22:44:43 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/10 23:41:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 {
 	if (ac < 5)
 	{
-		ft_putendl_fd("Error : Expected at least 4 arguments", 2);
+		ft_putstr_fd("Error : Expected at least 4 arguments\n", 2);
 		exit(1);
 	}
 	ft_memset(data, 0, sizeof(t_data));
@@ -43,7 +43,7 @@ void	ft_heredoc(t_data *data, int ac, char **av)
 	{
 		if (ac < 6)
 		{
-			ft_putendl_fd("Error : Expected at least 5 arguments", 2);
+			ft_putstr_fd("Error : Expected at least 5 arguments\n", 2);
 			exit(1);
 		}
 		data->in = open("tmpfile.txt", O_CREAT | O_WRONLY, 0666);
@@ -84,22 +84,21 @@ void	ft_exit(t_data *data, t_pid **lst_pid, char *msg)
 		tmp = (*lst_pid);
 		(*lst_pid) = (*lst_pid)->next;
 		free(tmp);
+		tmp = NULL;
 	}
 	free(*lst_pid);
-	if (ft_strncmp(msg, "main", 4) != 0)
-	{
-		perror(msg);
-		close(data->fd[0]);
-		close(data->fd[1]);
-	}
-	if (close(STDIN_FILENO) == -1 || close(STDOUT_FILENO) == -1)
-		exit(errno);
 	free_split(data->cmd_args);
 	free_split(data->path);
 	free(data->cmd);
 	free(data->cmd_path);
 	if (data->in != -1)
 		close(data->in);
-	close(data->out);
-	exit(errno);
+	if (data->out != -1)
+		close(data->out);
+	if (ft_strncmp(msg, "main", 4) == 0)
+		exit(errno);
+	perror(msg);
+	close(data->fd[0]);
+	close(data->fd[1]);
+	exit(errno);	
 }
