@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 19:15:55 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/10 22:46:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	main(int ac, char **av, char **env)
 		free(tmp);
 	}
 	free(pid);
+	if (data.here_doc == 1)
+		unlink("tmpfile.txt");
 	if (WIFEXITED(data.status))
 		errno = WEXITSTATUS(data.status);
 	ft_exit(&data, &pid, "main");

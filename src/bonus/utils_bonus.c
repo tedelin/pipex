@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 19:46:42 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/10 22:44:43 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 	if (data->here_doc == 1)
 	{
 		close(data->in);
-		data->in = open("tmpfile", O_RDONLY);
+		data->in = open("tmpfile.txt", O_RDONLY);
 		data->out = open(av[ac - 1], O_APPEND | O_WRONLY | O_CREAT, 0666);
 		data->nb_cmd++;
 	}
@@ -46,7 +46,7 @@ void	ft_heredoc(t_data *data, int ac, char **av)
 			ft_putendl_fd("Error : Expected at least 5 arguments", 2);
 			exit(1);
 		}
-		data->in = open("tmpfile", O_CREAT | O_WRONLY, 0666);
+		data->in = open("tmpfile.txt", O_CREAT | O_WRONLY, 0666);
 		ft_putstr_fd("here_doc>", 0);
 		line = get_next_line(0);
 		while (ft_strncmp(line, av[2], ft_strlen(av[2])))
@@ -57,6 +57,7 @@ void	ft_heredoc(t_data *data, int ac, char **av)
 			line = NULL;
 			line = get_next_line(0);
 		}
+		free(line);
 		data->here_doc = 1;
 		return ;
 	}
