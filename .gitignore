@@ -2,6 +2,7 @@
 old/
 Makefile_malloc
 ft_mallocator/
+test.c
 hihi/
 utils/
 in.txt

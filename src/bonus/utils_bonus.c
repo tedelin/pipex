@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/09 15:10:18 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/10 11:42:51 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 	}
 }
 
-void	ft_clear(t_data *data)
-{
-	free_split(data->cmd_args);
-	free(data->cmd);
-	free(data->cmd_path);
-	data->cmd_args = NULL;
-	data->cmd = NULL;
-	data->cmd_path = NULL;
-}
-
 void	free_split(char	**tab)
 {
 	int	i;
@@ -59,8 +49,28 @@ void	free_split(char	**tab)
 	free(tab);
 }
 
-void	ft_exit(void)
+void	ft_exit(t_data *data, t_pid **lst_pid, char *msg)
 {
-	perror("Error ");
+	t_pid	*tmp;
+
+	if (!msg && errno != 0)
+		perror("Error ");
+	else if (ft_strncmp(msg, "main", 4) != 0 && errno != 0)
+		perror(msg);
+	while ((*lst_pid))
+	{
+		tmp = (*lst_pid);
+		(*lst_pid) = (*lst_pid)->next;
+		free(tmp);
+	}
+	free((*lst_pid));
+	free_split(data->cmd_args);
+	free_split(data->path);
+	free(data->cmd);
+	free(data->cmd_path);
+	if (data->in != -1)
+		close(data->in);
+	if (data->out != -1)
+		close(data->out);
 	exit(errno);
 }

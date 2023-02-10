@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/09 17:33:58 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/10 12:42:25 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int ac, char **av, char **env)
 	while (++data.nb_cmd <= ac - 2)
 	{
 		ft_process(&data, &pid);
-		ft_clear(&data);
 	}
 	while (pid)
 	{
@@ -32,11 +31,8 @@ int	main(int ac, char **av, char **env)
 		pid = pid->next;
 		free(tmp);
 	}
-	close(data.in);
-	close(data.out);
-	free_split(data.path);
+	free(pid);
 	if (WIFEXITED(data.status))
-		exit(WEXITSTATUS(data.status));
-	else
-		exit(0);
+		errno = WEXITSTATUS(data.status);
+	ft_exit(&data, &pid, "main");
 }
