@@ -6,12 +6,11 @@
 #    By: tedelin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 10:52:51 by tedelin           #+#    #+#              #
-#    Updated: 2023/02/10 13:15:04 by tedelin          ###   ########.fr        #
+#    Updated: 2023/02/11 19:47:09 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = pipex
-NAME_BONUS = pipex_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDE = -I./include -I./libft
@@ -19,19 +18,18 @@ SRC = $(addprefix src/mandatory/, pipex.c utils.c main.c)
 OBJ = $(addprefix obj/, pipex.o utils.o main.o)
 SRC_BONUS = $(addprefix src/bonus/, pipex_bonus.c utils_bonus.c lst_pid.c main_bonus.c)
 OBJ_BONUS = $(addprefix obj/, pipex_bonus.o utils_bonus.o lst_pid.o main_bonus.o)
-LIBFT_LIB = libft/libft.a
-LIBFT_PATH = libft
+LIBFT = -Llibft -lft
 
-all: $(NAME) $(NAME_BONUS)
+all: $(NAME)
 
-$(LIBFT_LIB):
-	make -C $(LIBFT_PATH)
+libft/libft.a:
+	make -C libft
 
-$(NAME): $(OBJ) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^
+$(NAME): $(OBJ) libft/libft.a
+	$(CC) $(CFLAGS) $(INCLUDE) $(OBJ) $(LIBFT) -o $@
 
-$(NAME_BONUS): $(OBJ_BONUS) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^
+bonus: $(OBJ_BONUS) libft/libft.a
+	$(CC) $(CFLAGS) $(INCLUDE) $(OBJ_BONUS) $(LIBFT) -o $(NAME)
 
 obj/%.o: src/mandatory/%.c
 	mkdir -p $(dir $@)
@@ -42,14 +40,13 @@ obj/%.o: src/bonus/%.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 clean:
-	make -C $(LIBFT_PATH) clean
-	rm -f $(OBJ)
+	make -C libft clean
+	rm -f $(OBJ) $(OBJS_BONUS)
 	rm -rf obj
 
 fclean:	clean
-	make -C $(LIBFT_PATH) fclean
+	make -C libft fclean
 	rm -f $(NAME)
-	rm -f $(NAME_BONUS)
 
 re: fclean all
 
