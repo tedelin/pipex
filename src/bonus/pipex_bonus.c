@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 15:25:07 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/11 18:22:38 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,6 @@ void	ft_access(t_data *data)
 		free(data->cmd_path);
 		data->cmd_path = NULL;
 	}
-	if (!data->cmd_path)
-		ft_putendl_fd("empty", 2);
 	return ;
 }
 
