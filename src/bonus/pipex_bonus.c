@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 23:08:01 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/11 15:25:07 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,18 @@ void	ft_child(t_data *data, t_pid **lst_pid)
 		ft_exit(data, lst_pid, "dup2 ");
 	if (close(data->fd[0]) == -1 || close(data->fd[1]) == -1)
 		ft_exit(data, lst_pid, "dup2 ");
+	ft_exec(data, lst_pid);
+}
+
+void	ft_exec(t_data *data, t_pid **lst_pid)
+{
 	ft_access(data);
-	if (execve(data->cmd_path, data->cmd_args, data->env) == -1)
+	if (data->cmd_path == NULL || execve(data->cmd_path, data->cmd_args, data->env) == -1)
 	{
 		errno = 127;
-		ft_exit(data, lst_pid, data->cmd_args[0]);
+		ft_putstr_fd("command not found : ", 2);
+		ft_putendl_fd(data->cmd_args[0], 2);
+		ft_exit(data, lst_pid, "main");
 	}
 }
 
@@ -96,6 +103,8 @@ void	ft_access(t_data *data)
 		free(data->cmd_path);
 		data->cmd_path = NULL;
 	}
+	if (!data->cmd_path)
+		ft_putendl_fd("empty", 2);
 	return ;
 }
 

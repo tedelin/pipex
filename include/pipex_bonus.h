@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/02 18:11:52 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 19:42:52 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/11 14:53:47 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	ft_process(t_data *data, t_pid **lst_pid);
 void	ft_child(t_data *data, t_pid **lst_pid);
 void	ft_access(t_data *data);
 char	**ft_path(char **env);
+void	ft_exec(t_data *data, t_pid **lst_pid);
 
 // Utils
 void	init_data(t_data *data, int ac, char **av, char **env);

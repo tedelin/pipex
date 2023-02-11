@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/10 23:41:39 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/11 11:00:34 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 		data->in = open("tmpfile.txt", O_RDONLY);
 		data->out = open(av[ac - 1], O_APPEND | O_WRONLY | O_CREAT, 0666);
 		data->nb_cmd++;
+	}
+	else
+	{
+		data->in = open(av[1], O_RDONLY);
+		data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0666);
 	}
 	data->path = ft_path(env);
 }
@@ -61,8 +66,6 @@ void	ft_heredoc(t_data *data, int ac, char **av)
 		data->here_doc = 1;
 		return ;
 	}
-	data->in = open(av[1], O_RDONLY);
-	data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0666);
 }
 
 void	free_split(char	**tab)
@@ -100,5 +103,5 @@ void	ft_exit(t_data *data, t_pid **lst_pid, char *msg)
 	perror(msg);
 	close(data->fd[0]);
 	close(data->fd[1]);
-	exit(errno);	
+	exit(errno);
 }
