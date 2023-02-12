@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   bonus_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 10:56:24 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/12 14:48:49 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 	t_pid	*pid;
-	t_pid	*tmp;
+	t_pid	*head;
 
 	init_data(&data, ac, av, env);
 	pid = NULL;
@@ -24,17 +24,16 @@ int	main(int ac, char **av, char **env)
 	{
 		ft_process(&data, &pid);
 	}
+	head = pid;
 	while (pid)
 	{
-		tmp = pid;
 		waitpid(pid->content, &data.status, 0);
 		pid = pid->next;
-		free(tmp);
 	}
-	free(pid);
 	if (data.here_doc == 1)
+	{
 		unlink("tmpfile.txt");
-	if (WIFEXITED(data.status))
-		errno = WEXITSTATUS(data.status);
-	ft_exit(&data, &pid, "main");
+	}
+	errno = WEXITSTATUS(data.status);
+	ft_exit(&data, &head, "main");
 }

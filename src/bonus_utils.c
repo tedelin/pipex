@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_bonus.c                                      :+:      :+:    :+:   */
+/*   bonus_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 11:00:34 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/12 19:46:05 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 	{
 		close(data->in);
 		data->in = open("tmpfile.txt", O_RDONLY);
-		data->out = open(av[ac - 1], O_APPEND | O_WRONLY | O_CREAT, 0666);
+		data->out = open(av[ac - 1], O_APPEND | O_WRONLY | O_CREAT, 0664);
 		data->nb_cmd++;
 	}
 	else
 	{
 		data->in = open(av[1], O_RDONLY);
-		data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0666);
+		data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0664);
 	}
 	data->path = ft_path(env);
 }
@@ -51,7 +51,7 @@ void	ft_heredoc(t_data *data, int ac, char **av)
 			ft_putstr_fd("Error : Expected at least 5 arguments\n", 2);
 			exit(1);
 		}
-		data->in = open("tmpfile.txt", O_CREAT | O_WRONLY, 0666);
+		data->in = open("tmpfile.txt", O_CREAT | O_WRONLY, 0664);
 		ft_putstr_fd("here_doc>", 0);
 		line = get_next_line(0);
 		while (ft_strncmp(line, av[2], ft_strlen(av[2])))
