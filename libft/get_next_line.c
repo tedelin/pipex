@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 13:14:40 by tedelin           #+#    #+#             */
-/*   Updated: 2022/11/24 17:03:12 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/12 13:18:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,9 @@ char	*get_next_line(int fd)
 	static char	*stash;
 	char		*line;
 	char		*buff;
-	int			b_read;
 
 	line = ft_checkstash(&stash);
-	if (line)
-		return (line);
-	b_read = ft_read(fd, &buff);
-	if (stash && b_read == 0 && !line)
-		return (ft_lastline(&stash));
-	if (!line && b_read > 0)
+	if (!line && ft_read(fd, &buff) > 0)
 	{
 		if (ft_strchr(buff, '\n'))
 		{
@@ -108,8 +102,10 @@ char	*get_next_line(int fd)
 				return (free(stash), NULL);
 			return (line);
 		}
-		stash = ft_strjoingnl(stash, buff);
+		stash = ft_strjoin(stash, buff);
 		return (get_next_line(fd));
 	}
-	return (NULL);
+	else if (stash && !line)
+		return (ft_lastline(&stash));
+	return (line);
 }
