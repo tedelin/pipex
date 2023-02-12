@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 18:29:26 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/12 11:34:40 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_child(t_data *data, t_pid **lst_pid)
 	if (data->nb_cmd == 2 || (data->here_doc == 1 && data->nb_cmd == 3))
 	{
 		if (data->in == -1)
-			ft_exit(data, lst_pid, "File error ");
+			ft_exit(data, lst_pid, data->av[1]);
 		if (dup2(data->in, STDIN_FILENO) == -1
 			|| dup2(data->fd[1], STDOUT_FILENO) == -1)
 			ft_exit(data, lst_pid, "dup2 ");
@@ -54,7 +54,7 @@ void	ft_child(t_data *data, t_pid **lst_pid)
 	else if (data->nb_cmd == data->ac - 2)
 	{
 		if (data->out == -1)
-			ft_exit(data, lst_pid, "File error ");
+			ft_exit(data, lst_pid, data->av[data->ac - 1]);
 		if (dup2(data->out, STDOUT_FILENO) == -1)
 			ft_exit(data, lst_pid, "dup2 ");
 	}
@@ -72,8 +72,8 @@ void	ft_exec(t_data *data, t_pid **lst_pid)
 		|| execve(data->cmd_path, data->cmd_args, data->env) == -1)
 	{
 		errno = 127;
-		ft_putstr_fd("command not found : ", 2);
-		ft_putendl_fd(data->cmd_args[0], 2);
+		ft_putstr_fd(data->cmd_args[0], 2);
+		ft_putendl_fd(": command not found", 2);
 		ft_exit(data, lst_pid, "main");
 	}
 }
