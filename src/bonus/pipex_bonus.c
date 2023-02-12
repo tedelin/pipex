@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/12 11:34:40 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/12 12:22:39 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	ft_access(t_data *data)
 	data->cmd = ft_strjoin("/", data->cmd_args[0]);
 	if (data->cmd == NULL)
 		return ;
-	while (data->path[++i])
+	while (data->path && data->path[++i])
 	{
 		data->cmd_path = ft_strjoin(data->path[i], data->cmd);
 		if (!data->cmd_path)
