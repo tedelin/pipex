@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 16:10:59 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 19:59:37 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:11:17 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int ac, char **av, char **env)
 	ft_process(&data);
 	waitpid(first, &data.status, 0);
 	waitpid(data.pid, &data.status, 0);
-	if (WIFEXITED(data.status))
-		errno = WEXITSTATUS(data.status);
+	errno = WEXITSTATUS(data.status);
 	ft_exit(&data, "main");
 }

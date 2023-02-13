@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 19:58:42 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:17:43 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void	ft_child(t_data *data)
 void	ft_exec(t_data *data)
 {
 	ft_access(data);
-	if (data->cmd_path == NULL
+	if (!data->cmd_path
 		|| execve(data->cmd_path, data->cmd_args, data->env) == -1)
 	{
 		errno = 127;
-		ft_putstr_fd("command not found : ", 2);
-		ft_putendl_fd(data->cmd_args[0], 2);
+		ft_putstr_fd(data->cmd_args[0], 2);
+		ft_putendl_fd(": command not found", 2);
 		ft_exit(data, "main");
 	}
 }
@@ -91,7 +91,7 @@ void	ft_access(t_data *data)
 	data->cmd = ft_strjoin("/", data->cmd_args[0]);
 	if (data->cmd == NULL)
 		return ;
-	while (data->path[++i])
+	while (data->path && data->path[++i])
 	{
 		data->cmd_path = ft_strjoin(data->path[i], data->cmd);
 		if (!data->cmd_path)

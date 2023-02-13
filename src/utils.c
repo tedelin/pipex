@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/11 19:59:22 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:13:13 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_data(t_data *data, int ac, char **av, char **env)
 	data->ac = ac;
 	data->nb_cmd = 2;
 	data->in = open(av[1], O_RDONLY);
-	data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0666);
+	data->out = open(av[ac - 1], O_TRUNC | O_WRONLY | O_CREAT, 0664);
 	data->path = ft_path(env);
 }
 

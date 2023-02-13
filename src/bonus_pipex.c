@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   bonus_pipex.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/12 12:22:39 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:14:37 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_child(t_data *data, t_pid **lst_pid)
 void	ft_exec(t_data *data, t_pid **lst_pid)
 {
 	ft_access(data);
-	if (data->cmd_path == NULL
+	if (!data->cmd_path
 		|| execve(data->cmd_path, data->cmd_args, data->env) == -1)
 	{
 		errno = 127;
