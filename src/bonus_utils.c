@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/12 19:46:05 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 17:43:47 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ void	ft_heredoc(t_data *data, int ac, char **av)
 			exit(1);
 		}
 		data->in = open("tmpfile.txt", O_CREAT | O_WRONLY, 0664);
-		ft_putstr_fd("here_doc>", 0);
+		ft_putstr_fd("pipe heredoc>", 0);
 		line = get_next_line(0);
-		while (ft_strncmp(line, av[2], ft_strlen(av[2])))
+		while (strncmp(av[2], line, ft_strlen(av[2])) != 0
+			|| (ft_strlen(line) - 1 != ft_strlen(av[2])))
 		{
 			ft_putstr_fd(line, data->in);
-			ft_putstr_fd("here_doc>", 0);
+			ft_putstr_fd("pipe heredoc>", 0);
 			free(line);
 			line = NULL;
 			line = get_next_line(0);
