@@ -6,7 +6,7 @@
 #    By: tedelin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/18 10:52:51 by tedelin           #+#    #+#              #
-#    Updated: 2023/02/12 13:14:19 by tedelin          ###   ########.fr        #
+#    Updated: 2023/02/13 18:47:11 by tedelin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC_BONUS = $(addprefix src/, bonus_pipex.c bonus_utils.c bonus_lst.c bonus_main
 OBJ_BONUS = $(addprefix obj/, bonus_pipex.o bonus_utils.o bonus_lst.o bonus_main.o)
 LIBFT = -Llibft -lft
 
-all: $(NAME)
+all: $(NAME) $(NAME_BONUS)
 
 libft/libft.a:
 	make -C libft

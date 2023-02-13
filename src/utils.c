@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 12:50:20 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/13 14:13:13 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:11:55 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_data(t_data *data, int ac, char **av, char **env)
 {
-	if (ac < 5)
+	if (ac != 5)
 	{
 		ft_putstr_fd("Error : Expected 4 arguments\n", 2);
 		exit(1);

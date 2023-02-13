@@ -6,7 +6,7 @@
 /*   By: tedelin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 11:22:32 by tedelin           #+#    #+#             */
-/*   Updated: 2023/02/13 14:17:43 by tedelin          ###   ########.fr       */
+/*   Updated: 2023/02/13 18:02:22 by tedelin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_child(t_data *data)
 	if (data->nb_cmd == 2)
 	{
 		if (data->in == -1)
-			ft_exit(data, "File error ");
+			ft_exit(data, data->av[1]);
 		if (dup2(data->in, STDIN_FILENO) == -1
 			|| dup2(data->fd[1], STDOUT_FILENO) == -1)
 			ft_exit(data, "dup2 ");
@@ -53,7 +53,7 @@ void	ft_child(t_data *data)
 	else if (data->nb_cmd == data->ac - 2)
 	{
 		if (data->out == -1)
-			ft_exit(data, "File error ");
+			ft_exit(data, data->av[data->ac - 1]);
 		if (dup2(data->out, STDOUT_FILENO) == -1)
 			ft_exit(data, "dup2 ");
 	}
@@ -85,7 +85,7 @@ void	ft_access(t_data *data)
 		return ;
 	if (access(data->cmd_args[0], X_OK) == 0)
 	{
-		data->cmd_path = data->cmd_args[0];
+		data->cmd_path = ft_strdup(data->cmd_args[0]);
 		return ;
 	}
 	data->cmd = ft_strjoin("/", data->cmd_args[0]);
